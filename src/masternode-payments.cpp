@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -355,7 +355,7 @@ void CMasternodePayments::ProcessMessageMasternodePayments(CNode* pfrom, std::st
         if (Params().NetworkID() == CBaseChainParams::MAIN) {
             if (pfrom->HasFulfilledRequest("mnget")) {
                 LogPrintf("mnget - peer already asked me for the list\n");
-                Misbehaving(pfrom->GetId(), 20);
+                //Misbehaving(pfrom->GetId(), 20);
                 return;
             }
         }

@@ -290,7 +290,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock blockFrom, const CTra
     int64_t nValueIn = txPrev.vout[prevout.n].nValue;
     unsigned int nTimeBlockFrom = blockFrom.GetBlockTime();
 
-    int nHeightStart = chainActive.Height();
+
     if (nTimeTx < nTimeBlockFrom) // Transaction timestamp violation
         return error("CheckStakeKernelHash() : nTime violation");
 

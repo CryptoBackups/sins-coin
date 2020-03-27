@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -212,7 +212,7 @@ void CMasternode::Check(bool forceCheck)
     if (!unitTest) {
         CValidationState state;
         CMutableTransaction tx = CMutableTransaction();
-        CTxOut vout = CTxOut(((Params().MasternodeCollateral() - 0.01)) * COIN, privateSendPool.collateralPubKey);
+        CTxOut vout = CTxOut(((Params().GetMasternodeCollateral(chainActive.Height()) - 0.01)) * COIN, privateSendPool.collateralPubKey);
         tx.vin.push_back(vin);
         tx.vout.push_back(vout);
 
@@ -572,7 +572,7 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
 
     CValidationState state;
     CMutableTransaction tx = CMutableTransaction();
-    CTxOut vout = CTxOut(((Params().MasternodeCollateral() - 0.01)) * COIN, privateSendPool.collateralPubKey);
+    CTxOut vout = CTxOut(((Params().GetMasternodeCollateral(chainActive.Height()) - 0.01)) * COIN, privateSendPool.collateralPubKey);
     tx.vin.push_back(vin);
     tx.vout.push_back(vout);
 

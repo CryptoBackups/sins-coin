@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1458,13 +1458,13 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                 if (nCoinType == ONLY_DENOMINATED) {
                     found = IsDenominatedAmount(pcoin->vout[i].nValue);
                 } else if (nCoinType == ONLY_NOT10000IFMN) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == Params().MasternodeCollateral() * COIN);
+                    found = !(fMasterNode && pcoin->vout[i].nValue == Params().GetMasternodeCollateral(chainActive.Height()) * COIN);
                 } else if (nCoinType == ONLY_NONDENOMINATED_NOT10000IFMN) {
                     if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
                     found = !IsDenominatedAmount(pcoin->vout[i].nValue);
-                    if (found && fMasterNode) found = pcoin->vout[i].nValue != Params().MasternodeCollateral() * COIN; // do not use Hot MN funds
+                    if (found && fMasterNode) found = pcoin->vout[i].nValue != Params().GetMasternodeCollateral(chainActive.Height()) * COIN; // do not use Hot MN funds
                 } else if (nCoinType == ONLY_MNCOLLATERAL) {
-                    found = pcoin->vout[i].nValue == Params().MasternodeCollateral() * COIN;
+                    found = pcoin->vout[i].nValue == Params().GetMasternodeCollateral(chainActive.Height()) * COIN;
                 } else {
                     found = true;
                 }
@@ -1842,7 +1842,7 @@ bool CWallet::SelectCoinsByDenominations(int nDenom, CAmount nValueMin, CAmount 
 
     BOOST_FOREACH (const COutput& out, vCoins) {
         // masternode-like input should not be selected by AvailableCoins now anyway
-        //if(out.tx->vout[out.i].nValue == Params().MasternodeCollateral()*COIN) continue;
+        //if(out.tx->vout[out.i].nValue == Params().GetMasternodeCollateral(chainActive.Height())*COIN) continue;
         if (nValueRet + out.tx->vout[out.i].nValue <= nValueMax) {
             bool fAccepted = false;
 
@@ -1938,7 +1938,7 @@ bool CWallet::SelectCoinsDark(CAmount nValueMin, CAmount nValueMax, std::vector<
         if (out.tx->vout[out.i].nValue < CENT) continue;
         //do not allow collaterals to be selected
         if (IsCollateralAmount(out.tx->vout[out.i].nValue)) continue;
-        if (fMasterNode && out.tx->vout[out.i].nValue == Params().MasternodeCollateral() * COIN) continue; //masternode input
+        if (fMasterNode && out.tx->vout[out.i].nValue == Params().GetMasternodeCollateral(chainActive.Height()) * COIN) continue; //masternode input
 
         if (nValueRet + out.tx->vout[out.i].nValue <= nValueMax) {
             CTxIn vin = CTxIn(out.tx->GetHash(), out.i);

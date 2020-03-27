@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -18,7 +18,7 @@
 #define MASTERNODE_SYNC_FINISHED 999
 
 #define MASTERNODE_SYNC_TIMEOUT 5
-#define MASTERNODE_SYNC_THRESHOLD 2
+#define MASTERNODE_SYNC_THRESHOLD 1
 
 class CMasternodeSync;
 extern CMasternodeSync masternodeSync;

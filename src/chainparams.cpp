@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,11 +52,12 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
     (185125, uint256("16990263ea82bd67b4b37b5e5daa27ee51266b4a3bb4a7b2836e343320b8eb34"))
     (377937, uint256("e8bc14c0d0a59c0f3c3225a4ab1f5b83ca09087d85324997ce78606d4f59f26f"))    
     (495630, uint256("f366b2027aa82fcf5435055ee0ab1c7da38bcc1fbdcafb5ed5677f3da6fbfc2f"))  
-    (652305, uint256("1ba1ce1832a436bce86cfae0647f9988d6c150b8375cfe90a3cfcf571c78e2e7"));    
+    (652305, uint256("1ba1ce1832a436bce86cfae0647f9988d6c150b8375cfe90a3cfcf571c78e2e7"))   
+    (797930, uint256("7b74f9dc03c6df2d2ff01981868d132d04e7e57e0ec80da86bbdfff5b43ebff9"));     
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1576499716,   // * UNIX timestamp of last checkpoint block
-    1838364,      // * total number of transactions between genesis and last checkpoint
+    1585316747,   // * UNIX timestamp of last checkpoint block
+    2173010,      // * total number of transactions between genesis and last checkpoint
                   //   (the tx=... number in the SetBestChain debug.log lines)
     2000          // * estimated number of transactions per day after checkpoint
 };
@@ -104,7 +105,9 @@ public:
         nMasternodeCountDrift = 20;
         nModifierUpdateBlock = 1;
         nMaxMoneyOut = 21000000 * COIN;
-        nMasternodeCollateral = 1000; 
+        nMasternodeCollateralChangeBlock = 830000;
+        nMasternodeCollateralOld = 1000;
+        nMasternodeCollateralNew = 10000;
         nStakeMinConfirmations = 300;   // Required number of confirmations
         nStakeMinAmount = 150 * COIN;    // Minimum required staking amount
 
@@ -195,7 +198,9 @@ public:
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 1; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 43199500 * COIN;
-        nMasternodeCollateral = 1000; 
+        nMasternodeCollateralChangeBlock = 825000;
+        nMasternodeCollateralOld = 1000;
+        nMasternodeCollateralNew = 10000;
         nStakeMinConfirmations = 15;   // Required number of confirmations
         nStakeMinAmount = 10 * COIN;    // Minimum required staking amount
 
@@ -379,4 +384,12 @@ bool SelectParamsFromCommandLine()
 
     SelectParams(network);
     return true;
+}
+
+
+int CChainParams::GetMasternodeCollateral(int nHeight) const {
+
+        if(nHeight >= nMasternodeCollateralChangeBlock)
+            return nMasternodeCollateralNew;
+        return nMasternodeCollateralOld;
 }

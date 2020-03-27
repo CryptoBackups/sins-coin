@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2019 The SafeInsure Core developers
+// Copyright (c) 2017-2020 The SafeInsure Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -5304,17 +5304,16 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
 int ActiveProtocol()
 {
 
-    //  SPORK_14 will be used for future release.
-    /*
+    // SPORK_14 is used for 70923.
+
     if (IsSporkActive(SPORK_14_NEW_PROTOCOL_ENFORCEMENT))
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
-    */
     
-    // SPORK_15 is used for 70922.
-
+    // SPORK_15 will be used for future release.
+    /*
     if (IsSporkActive(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2))
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
-
+    */
     
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
 
