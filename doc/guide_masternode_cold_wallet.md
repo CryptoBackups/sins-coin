@@ -4,7 +4,7 @@
 This guide is for a single masternode, on a Ubuntu 16.04 64bit server(1GB RAM) and will be controlled from the wallet on your local computer.
 
 First the basic requirements:
-* 1000 SINS (https://crex24.com/exchange/SINS-BTC)
+* 10,000.00 SINS (https://crex24.com/exchange/SINS-BTC)
 * A main computer(Your everyday computer)
 * Masternode Server(The computer that will be on 24/7)
 * A unique IP address for EACH masternode
@@ -38,9 +38,9 @@ For this guide, I’m going to refer to your main computer’s wallet as the mai
 4. SETTINGS -> OPTIONS -> WALLET and check "Show Masternodes Tab". Press OK and restart main wallet
 5. TOOLS -> DEBUG CONSOLE and type the following command:
    ```getaccountaddress mn1```
-6. Send 1000 SINS to this address.(Make sure this is 100% only 1000; No less, no more.) and wait for 15 confirmations
+6. Send 10,000.00 SINS to this address.(Make sure this is 100% only 10,000.00; No less, no more.) and wait for 15 confirmations
 7. Still in the main wallet, enter the command into the console:
-   ```masternode outputs``` (This gets the proof of transaction of sending 1000)
+   ```masternode outputs``` (This gets the proof of transaction of sending 10,000.00)
 8. Still on the main computer, go into the SafeInsure data directory(D:\safeinsure\data)
    Find masternode.conf and add the following line to it:   
    
