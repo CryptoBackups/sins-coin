@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <climits>
 #include <limits>
+#include "memusage.h"
 #include "pubkey.h"
 #include <stdexcept>
 #include <stdint.h>
@@ -608,6 +609,8 @@ public:
         // The default std::vector::clear() does not release memory.
         std::vector<unsigned char>().swap(*this);
     }
+    
+    size_t DynamicMemoryUsage() const;
 };
 
 #endif // BITCOIN_SCRIPT_SCRIPT_H

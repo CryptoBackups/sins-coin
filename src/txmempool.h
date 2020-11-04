@@ -40,6 +40,7 @@ private:
     CTransaction tx;
     CAmount nFee;         //! Cached to avoid expensive parent-transaction lookups
     size_t nTxSize;       //! ... and avoid recomputing tx size
+    size_t nUsageSize;    //! ... and total memory usage
     int64_t nTime;        //! Local time when entering the mempool
     unsigned int nHeight; //! Chain height when entering the mempool
 
@@ -53,6 +54,7 @@ public:
     size_t GetTxSize() const { return nTxSize; }
     int64_t GetTime() const { return nTime; }
     unsigned int GetHeight() const { return nHeight; }
+    size_t DynamicMemoryUsage() const { return nUsageSize; }
 };
 
 class CMinerPolicyEstimator;
@@ -76,6 +78,7 @@ public:
         n = (uint32_t)-1;
     }
     bool IsNull() const { return (ptx == NULL && n == (uint32_t)-1); }
+    size_t DynamicMemoryUsage() const { return 0; }
 };
 
 /**
@@ -97,6 +100,7 @@ private:
 
     CFeeRate minRelayFee; //! Passed to constructor to avoid dependency on main
     uint64_t totalTxSize; //! sum of all mempool tx' byte sizes
+    uint64_t cachedInnerUsage; //! sum of dynamic memory usage of all the map elements (NOT the maps themselves)
 
 public:
     mutable CCriticalSection cs;
@@ -157,6 +161,7 @@ public:
     /** Write/Read estimates to disk */
     bool WriteFeeEstimates(CAutoFile& fileout) const;
     bool ReadFeeEstimates(CAutoFile& filein);
+    size_t DynamicMemoryUsage() const;
 };
 
 /** 

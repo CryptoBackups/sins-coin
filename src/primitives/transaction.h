@@ -7,6 +7,7 @@
 #define BITCOIN_PRIMITIVES_TRANSACTION_H
 
 #include "amount.h"
+#include "memusage.h"
 #include "script/script.h"
 #include "serialize.h"
 #include "uint256.h"
@@ -53,6 +54,7 @@ public:
     std::string ToStringShort() const;
 
     uint256 GetHash();
+    size_t DynamicMemoryUsage() const { return 0; }
 
 };
 
@@ -103,6 +105,7 @@ public:
     }
 
     std::string ToString() const;
+    size_t DynamicMemoryUsage() const { return scriptSig.DynamicMemoryUsage(); }
 };
 
 /** An output of a transaction.  It contains the public key that the next input
@@ -189,6 +192,7 @@ public:
     }
 
     std::string ToString() const;
+    size_t DynamicMemoryUsage() const { return scriptPubKey.DynamicMemoryUsage(); }
 };
 
 struct CMutableTransaction;
@@ -278,6 +282,7 @@ public:
     std::string ToString() const;
 
     bool GetCoinAge(uint64_t& nCoinAge) const;  // ppcoin: get transaction coin age
+    size_t DynamicMemoryUsage() const;
 };
 
 /** A mutable version of CTransaction. */
