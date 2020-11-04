@@ -94,7 +94,9 @@ static const unsigned int MAX_HEADERS_RESULTS = 2000;
  *  harder). We'll probably want to make this a per-peer adaptive value at some point. */
 static const unsigned int BLOCK_DOWNLOAD_WINDOW = 1024;
 /** Time to wait (in seconds) between writing blockchain state to disk. */
-static const unsigned int DATABASE_WRITE_INTERVAL = 3600;
+static const unsigned int DATABASE_WRITE_INTERVAL = 60 * 60;
+/** Time to wait (in seconds) between flushing chainstate to disk. */
+static const unsigned int DATABASE_FLUSH_INTERVAL = 24 * 60 * 60;
 /** Maximum length of reject messages. */
 static const unsigned int MAX_REJECT_MESSAGE_LENGTH = 111;
 
@@ -132,7 +134,7 @@ extern int nScriptCheckThreads;
 extern bool fTxIndex;
 extern bool fIsBareMultisigStd;
 extern bool fCheckBlockIndex;
-extern unsigned int nCoinCacheSize;
+extern size_t nCoinCacheUsage;
 extern CFeeRate minRelayTxFee;
 extern bool fAlerts;
 
@@ -235,6 +237,7 @@ CAmount GetBlockValue(int nHeight);
 CBlockIndex* InsertBlockIndex(uint256 hash);
 /** Abort with a message */
 bool AbortNode(const std::string& msg, const std::string& userMessage = "");
+bool AbortNode(CValidationState& state, const std::string& msg, const std::string& userMessage = "");
 /** Get statistics from node state */
 bool GetNodeStateStats(NodeId nodeid, CNodeStateStats& stats);
 /** Increase a node's misbehavior score. */
