@@ -3899,7 +3899,7 @@ bool InitBlockIndex()
         return true;
 
     // Use the provided setting for -txindex in the new database
-    fTxIndex = GetBoolArg("-txindex", true);
+    fTxIndex = GetBoolArg("-txindex", DEFAULT_TXINDEX);
     pblocktree->WriteFlag("txindex", fTxIndex);
     LogPrintf("Initializing databases...\n");
 

@@ -102,6 +102,8 @@ static const unsigned int MAX_REJECT_MESSAGE_LENGTH = 111;
 
 /** Enable bloom filter */
  static const bool DEFAULT_PEERBLOOMFILTERS = true;
+ 
+ static const bool DEFAULT_TXINDEX = true;
 
 /** "reject" message codes */
 static const unsigned char REJECT_MALFORMED = 0x01;
